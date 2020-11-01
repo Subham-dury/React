@@ -1,39 +1,45 @@
-import React, { Component } from 'react';
-import { Card, CardImg, CardBody, CardText, CardTitle } from 'reactstrap';
+import React from 'react';
+import { Card, CardImg, CardText, CardBody,
+    CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
-class Dishdetail extends Component {
-
-    renderComments(comment) {
-        if (comment == null) {
-            return (<div></div>)
-        }
-        const comments = comment.map(comment => {
+    function RenderComments({comments}) {
+        if (comments != null) {
             return (
-                <li key={comment.id}>
-                    <p>{comment.comment}</p>
-                    <p>-- {comment.author},
-                    &nbsp;
-                    {new Intl.DateTimeFormat('en-US', {
+                <div className='col-12 col-md-5 m-1'>
+                <h4> Comments </h4>
+                <ul className='list-unstyled'>
+                    {comments.map((comment) => {
+                        return (
+                            <li key={comment.id}>
+                        <p>{comment.comment}</p>
+                        <p>-- {comment.author},
+                        &nbsp;
+                        {new Intl.DateTimeFormat('en-US', {
                             year: 'numeric',
                             month: 'long',
                             day: '2-digit'
                         }).format(new Date(comment.date))}
                     </p>
                 </li>
-            )
-        })
-        return (
-            <div className='col-12 col-md-5 m-1'>
-                <h4> Comments </h4>
-                <ul className='list-unstyled'>
-                    {comments}
+                
+                    
+                );}
+                    )}
+                    
                 </ul>
 
             </div>
-        )
-    }
+            );
+        }
+        else {
+        return (<div></div>);
+            
+        
+        
+    }}
 
-    renderDish(dish) {
+    function RenderDish({dish}) {
         if (dish != null) {
             return (
                 <div className='col-12 col-md-5 m-1'>
@@ -45,29 +51,41 @@ class Dishdetail extends Component {
                         </CardBody>
                     </Card>
                 </div>
-            )
+            );
         }
         else {
-            return (<div></div>)
+            return (<div></div>);
         }
     }
 
-    render() {
-        const dish = this.props.dish
-        if (dish == null) {
+    const DishDetail =(props) => { 
+        
+        if (props.dish == null) {
             return (<div></div>)
         }
-        const dishItem = this.renderDish(dish)
-        const commentItem = this.renderComments(dish.comments)
-        return (
-            <div className='container'>
+        else{
+        
+            return (
+                <div className="container">
                 <div className="row">
-                {dishItem}
-                {commentItem}
-                </div>
-            </div>
-        )
-    }
-}
+                    <Breadcrumb>
 
-export default Dishdetail 
+                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="col-12">
+                        <h3>{props.dish.name}</h3>
+                        <hr />
+                    </div>                
+                </div>
+                <div className="row">
+                    <RenderDish dish={props.dish} />
+                    <RenderComments comments={props.comments} />
+                    
+                </div>
+                </div>
+            );
+    }}
+
+
+export default DishDetail 
