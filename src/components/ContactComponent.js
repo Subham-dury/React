@@ -69,9 +69,9 @@ class Contact extends Component {
                     </div>
                 </div>
                 <div className="row row-content">
-                   <div className="col-12">
+                <div className="col-12">
                     <h3>Send us your Feedback</h3>
-                   </div>
+                </div>
                     <div className="col-12 col-md-9">
                     <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                             
@@ -84,7 +84,7 @@ class Contact extends Component {
                                         validators={{
                                             required, minLength: minLength(3), maxLength: maxLength(15)
                                         }}
-                                         />
+                                        />
                                     <Errors
                                         className="text-danger"
                                         model=".firstname"
@@ -161,6 +161,23 @@ class Contact extends Component {
                                             validEmail: 'Invalid Email Address'
                                         }}
                                     />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={{size: 6, offset: 2}}>
+                                    <Label check>
+                                        <Control.checkbox model=".agree" 
+                                            name="agree"
+                                            className="form-check-input" /> {' '}
+                                        <strong>May we contact you?</strong>
+                                    </Label>
+                                </Col>
+                                <Col md={{size: 3, offset: 1}}>
+                                    <Control.select model="contactType" name="contactType"
+                                            className="form-control">
+                                        <option>Tel.</option>
+                                        <option>Email</option>
+                                    </Control.select>
                                 </Col>
                             </Row>
                             <Row className="form-group">
